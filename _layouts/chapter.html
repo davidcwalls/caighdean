@@ -1,0 +1,14 @@
+---
+layout: default
+---
+
+<h1>Chapter {{ page.chapter }}</h1>
+
+{{ content }}
+
+{% assign sections = site.sections | where:"chapter",page.chapter | sort:"section" %}
+
+{% for section in sections %}
+	<a id="{{section.chapter}}.{{section.section}}"></a>
+	{{ section }}
+{% endfor %}

@@ -1,0 +1,10 @@
+<h2>{{ page.chapter }}.{{ page.section }} {{ page.title }}</h2>
+
+{% assign subsections = site.subsections | where:"chapter",page.chapter | where:"section",page.section | sort:"subsection" %}
+
+{{ content }}
+
+{% for subsection in subsections %}
+	<a id="{{page.chapter}}.{{page.section}}.{{subsection.subsection}}"></a>
+	{{ subsection }}
+{% endfor %}

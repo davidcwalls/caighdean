@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+{{ content }}
+
+<h1>Table of Contents</h1>
+<ul class="toc-chapter-list">
+{% for chapter in site.chapters %}
+	<li><a href="{{ chapter.url }}" {% if chapter.translated != true %}class="translation-ongoing"{% endif %}>Chapter {{ chapter.chapter }} : {{ chapter.title }}</a></li>
+	
+	{% assign sections = site.sections | where:"chapter",chapter.chapter %}
+
+	<ul class="toc-section-list">
+	{% for section in sections %}
+		<li><a href="{{chapter.url}}#{{section.chapter}}.{{section.section}}" {% if section.translated != true %}class="translation-ongoing"{% endif %}>{{section.chapter}}.{{section.section}} {{ section.title }}</a></li>
+		{% assign subsections = site.subsections | where:"chapter",chapter.chapter | where:"section",section.section | sort: "subsection" %}
+		<ul class="toc-subsection-list">
+		{% for subsection in subsections %}
+			{% if subsection.toc %}
+			<li><a href="{{chapter.url}}#{{subsection.chapter}}.{{subsection.section}}.{{subsection.subsection}}" {% if subsection.translated != true %}class="translation-ongoing"{% endif %}>
+			{{subsection.chapter}}.{{subsection.section}}.{{subsection.subsection}} {{ subsection.title }}</a></li>
+			{% endif %}
+		{% endfor %}
+		</ul>
+	{% endfor %}
+	</ul>
+{% endfor %}
+</ul>
